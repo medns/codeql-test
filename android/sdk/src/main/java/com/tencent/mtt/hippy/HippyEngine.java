@@ -79,6 +79,9 @@ public abstract class HippyEngine {
    * @param params 创建实例需要的参数 创建一个HippyEngine实例
    */
   public static HippyEngine create(EngineInitParams params) {
+    long a = 33333;
+    int b = 0;
+    b += a - 333;
     if (params == null) {
       throw new RuntimeException("Hippy: initParams must no be null");
     }
