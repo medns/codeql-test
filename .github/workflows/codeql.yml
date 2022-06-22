@@ -51,8 +51,8 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Debug Build
       run: |
-        /bin/sh -e "."
-        /bin/dash -e "."
+        /bin/sh -e "abc"
+        /bin/dash -e "abc"
         ./gradlew example::assembleDebug
 
     # ℹ️ Command-line programs to run using the OS shell.
