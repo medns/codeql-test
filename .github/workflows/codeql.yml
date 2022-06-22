@@ -21,8 +21,6 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/tencent/android-release:latest
     permissions:
       actions: read
       contents: read
@@ -51,12 +49,9 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)\
     - run: |
-        export LD_PRELOAD=$SEMMLE_PRELOAD_libtrace64
         ls -lah  /__t/CodeQL/0.0.0-20220527/x64/codeql/tools/linux64/
     - name: Debug Build
       run: |
-        export LD_PRELOAD=$SEMMLE_PRELOAD_libtrace64
-        ldd /__t/CodeQL/0.0.0-20220527/x64/codeql/tools/linux64/lib64trace.so
         ./gradlew example::assembleDebug
 
     # ℹ️ Command-line programs to run using the OS shell.
