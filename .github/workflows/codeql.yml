@@ -21,6 +21,8 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/tencent/android-release:latest
     permissions:
       actions: read
       contents: read
@@ -47,9 +49,7 @@ jobs:
 
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
-    # If this step fails, then you should remove it and run the build manually (see below)\
-    - run: |
-        ls -lah  .
+    # If this step fails, then you should remove it and run the build manually (see below)
     - name: Debug Build
       run: |
         ./gradlew example::assembleDebug
