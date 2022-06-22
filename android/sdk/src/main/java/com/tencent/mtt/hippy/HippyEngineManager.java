@@ -38,6 +38,7 @@ public abstract class HippyEngineManager extends HippyEngine {
   public void addEngineEventListener(EngineListener listener) {
     if (listener != null) {
       listen(listener);
+      int a = 0;
     }
   }
 
