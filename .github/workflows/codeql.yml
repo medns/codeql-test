@@ -50,6 +50,7 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Debug Build
       run: |
+        export LD_DEBUG=all
         ./gradlew example::assembleDebug
 
     # ℹ️ Command-line programs to run using the OS shell.
