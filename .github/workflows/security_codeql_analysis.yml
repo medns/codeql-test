@@ -59,7 +59,7 @@ jobs:
       if: matrix.language == 'java'
       run: |
         export skipCmakeAndNinja=1
-        ./gradlew example::assembleDebug
+#        ./gradlew example::assembleDebug
     - name: Build C++
       if: matrix.language == 'cpp'
       run: |
