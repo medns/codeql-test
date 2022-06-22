@@ -28,6 +28,7 @@ jobs:
       with:
         script: |
           const { pull_request } = context.payload;
+          const { pulls } = github.rest;
 
           if (pull_request === undefined) { // Push
             console.log("::set-output name=languages::cpp, java, javascript, typescript");
