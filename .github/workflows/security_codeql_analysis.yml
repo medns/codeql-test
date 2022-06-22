@@ -47,7 +47,6 @@ on:
 
 jobs:
   analyze:
-    name: CodeQL Analyze
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/tencent/android-release:latest
@@ -58,7 +57,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'cpp', 'java', 'javascript, typescript' ]
+        language: [ 'cpp', 'java' ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
