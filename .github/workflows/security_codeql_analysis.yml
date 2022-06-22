@@ -8,13 +8,14 @@ on:
     branches:
       - main
     paths:
+      # https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/#languages-and-compilers
       # cpp
       - '**/*.cpp'
-      - '**/*.c++'
+      - '**/*.c\+\+'
       - '**/*.cxx'
       - '**/*.hpp'
       - '**/*.hh'
-      - '**/*.h++'
+      - '**/*.h\+\+'
       - '**/*.hxx'
       - '**/*.c'
       - '**/*.cc'
