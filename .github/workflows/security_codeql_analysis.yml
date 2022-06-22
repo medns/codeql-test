@@ -72,7 +72,9 @@ jobs:
       with:
         node-version: latest
     - name: Debug Build
+      if: matrix.language == 'java' || matrix.language == 'cpp'
       run: |
+        ${{ matrix.language == 'java' && 'export skipCmakeAndNinja=1' || '' }}
         ./gradlew example::assembleDebug
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
