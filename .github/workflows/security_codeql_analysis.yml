@@ -1,0 +1,75 @@
+name: "[security] codeql analysis"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: [self-hosted]
+    container:
+      image: ghcr.io/tencent/android-release:latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Detect languages
+      id: detect_languages
+      uses: actions/github-script@v6.1.0
+      with: |
+        const { pull_request } = context.payload;
+
+        if (pull_request === undefined) { // Push
+          console.log("::set-output name=languages::cpp, java, javascript, typescript");
+          return;
+        }
+
+        const { owner, repo } = context.repo;
+        const { data: files } = await pulls.listFiles({
+          owner,
+          repo,
+          pull_number: pull_request.number,
+        });
+
+        // Ref: https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/#languages-and-compilers
+        const supportedLanguages  = {
+          "cpp": [".cpp", ".c++", ".cxx", ".hpp", ".hh", ".h++", ".hxx", ".c", ".cc", ".h"],
+          "java": [".java"],
+          "javascript": [".js", ".jsx", ".mjs", ".es", ".es6", ".htm", ".html", ".xhtm", ".xhtml", ".vue", ".hbs", ".ejs", ".njk", ".json", ".yaml", ".yml", ".raml", ".xml"],
+          "typescript": [".ts", ".tsx"]
+        };
+
+        const { extname } = require('path');
+        let detectedLanguage = [];
+        for (const { filename } of files) {
+          const ext = extname(filename);
+          for (const language of Object.keys(supportedLanguages)) {
+            if (supportedLanguages[language].includes(ext) && !detectedLanguage.includes(language)) {
+              detectedLanguage.push(language);
+              break;
+            }
+          }
+        }
+
+        console.log(`::set-output name=languages::${detectedLanguage}`);
+    - name: Initialize CodeQL
+      if: steps.detect_languages.outputs.languages != ''
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ steps.detect_languages.outputs.languages }}
+    - name: Debug Build
+      if: contains(steps.detect_languages.outputs.languages, 'java') || contains(steps.detect_languages.outputs.languages, 'cpp')
+      run: |
+        ./gradlew example::assembleDebug
+    - name: Perform CodeQL Analysis
+      if: steps.detect_languages.outputs.languages != ''
+      uses: github/codeql-action/analyze@v2
