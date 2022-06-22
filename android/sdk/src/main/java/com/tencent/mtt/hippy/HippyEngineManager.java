@@ -46,6 +46,9 @@ public abstract class HippyEngineManager extends HippyEngine {
   }
 
   public void initEngineInBackground() {
+    int a = 0;
+    long b = 222;
+    a += b;
     initEngine(null);
   }
 
