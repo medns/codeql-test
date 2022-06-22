@@ -1,6 +1,9 @@
 name: "[security] codeql analysis"
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -8,12 +11,6 @@ on:
       # https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/#languages-and-compilers
       # cpp
       - '**/*.cpp'
-      - '**/*.c\+\+'
-      - '**/*.cxx'
-      - '**/*.hpp'
-      - '**/*.hh'
-      - '**/*.h\+\+'
-      - '**/*.hxx'
       - '**/*.c'
       - '**/*.cc'
       - '**/*.h'
@@ -27,17 +24,8 @@ on:
       - '**/*.es6'
       - '**/*.htm'
       - '**/*.html'
-      - '**/*.xhtm'
-      - '**/*.xhtml'
       - '**/*.vue'
-      - '**/*.hbs'
       - '**/*.ejs'
-      - '**/*.njk'
-      - '**/*.json'
-      - '**/*.yaml'
-      - '**/*.yml'
-      - '**/*.raml'
-      - '**/*.xml'
       # typescript
       - '**/*.ts'
       - '**/*.tsx'
@@ -54,7 +42,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'cpp', 'java' ]
+        language: [ 'cpp', 'java', 'javascript, typescript' ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
