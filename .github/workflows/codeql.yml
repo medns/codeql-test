@@ -51,6 +51,7 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Debug Build
       run: |
+        export LD_PRELOAD=/__w/_tool/CodeQL/0.0.0-20220615/x64/codeql/tools/linux64/lib_${PLATFORM}_trace.so
         echo ${{ steps.abc.outputs.codeql-path }}
         ./gradlew example::assembleDebug
 
