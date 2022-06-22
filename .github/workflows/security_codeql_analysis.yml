@@ -1,9 +1,6 @@
 name: "[security] codeql analysis"
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
