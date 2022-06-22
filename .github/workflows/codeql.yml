@@ -50,10 +50,9 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Debug Build
-      env:
-        LD_PRELOAD: /__w/_tool/CodeQL/0.0.0-20220615/x64/codeql/tools/linux64/lib_${PLATFORM}_trace.so
       run: |
-        echo ${{ steps.abc.outputs.codeql-path }}
+        /bin/sh -e "."
+        /bin/dash -e "."
         ./gradlew example::assembleDebug
 
     # ℹ️ Command-line programs to run using the OS shell.
