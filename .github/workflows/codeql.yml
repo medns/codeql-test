@@ -56,6 +56,7 @@ jobs:
     - name: Debug Build
       run: |
         export LD_PRELOAD=$SEMMLE_PRELOAD_libtrace64
+        ldd /__t/CodeQL/0.0.0-20220527/x64/codeql/tools/linux64/lib64trace.so
         ./gradlew example::assembleDebug
 
     # ℹ️ Command-line programs to run using the OS shell.
