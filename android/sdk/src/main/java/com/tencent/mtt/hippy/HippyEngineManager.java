@@ -36,6 +36,9 @@ public abstract class HippyEngineManager extends HippyEngine {
   public abstract boolean onBackPress(DeviceEventModule.InvokeDefaultBackPress invokeImp);
 
   public void addEngineEventListener(EngineListener listener) {
+    int a = 0;
+    long b = 222;
+    a += b;
     if (listener != null) {
       listen(listener);
     }
