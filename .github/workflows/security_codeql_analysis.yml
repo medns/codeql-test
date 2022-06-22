@@ -67,13 +67,15 @@ jobs:
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ steps.detect_languages.outputs.languages }}
+    - name: Setup node
+      if: contains(steps.detect_languages.outputs.languages, 'typescript')
+      uses: actions/setup-node@v3
+    - run: |
+        node --version
     - name: Debug Build
       if: contains(steps.detect_languages.outputs.languages, 'java') || contains(steps.detect_languages.outputs.languages, 'cpp')
       run: |
         ./gradlew example::assembleDebug
-    - name: Setup node
-      if: contains(steps.detect_languages.outputs.languages, 'typescript')
-      uses: actions/setup-node@v3
     - name: Perform CodeQL Analysis
       if: steps.detect_languages.outputs.languages != ''
       uses: github/codeql-action/analyze@v2
