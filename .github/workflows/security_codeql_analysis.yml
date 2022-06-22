@@ -47,8 +47,8 @@ on:
 
 jobs:
   analyze:
-    name: Analyze
-    runs-on: [self-hosted]
+    name: CodeQL Analyze
+    runs-on: ubuntu-latest
     container:
       image: ghcr.io/tencent/android-release:latest
     permissions:
@@ -67,14 +67,18 @@ jobs:
       with:
         languages: ${{ matrix.language }}
     - name: Setup node
-      if: matrix.language == 'typescript'
+      if: matrix.language == 'typescript' || matrix.language == 'javascript'
       uses: actions/setup-node@v3
       with:
         node-version: latest
-    - name: Debug Build
-      if: matrix.language == 'java' || matrix.language == 'cpp'
+    - name: Build Java
+      if: matrix.language == 'java'
       run: |
-        ${{ matrix.language == 'java' && 'export skipCmakeAndNinja=1' || '' }}
+        export skipCmakeAndNinja=1
         ./gradlew example::assembleDebug
+    - name: Build C++
+      if: matrix.language == 'cpp'
+      run: |
+        ./gradlew android-sdk::buildCMakeRelease
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
