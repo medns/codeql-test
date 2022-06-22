@@ -35,6 +35,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
+      id: abc
       uses: github/codeql-action/init@v2
       with:
         languages: cpp, java
@@ -50,7 +51,7 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Debug Build
       run: |
-        export LD_DEBUG=all
+        echo ${{ steps.abc.outputs.codeql-path }}
         ./gradlew example::assembleDebug
 
     # ℹ️ Command-line programs to run using the OS shell.
