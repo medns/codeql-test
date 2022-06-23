@@ -14,8 +14,6 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/tencent/android-release:latest # repository name must be lowercase(${{ github.repository_owner }})
     permissions:
       actions: read
       contents: read

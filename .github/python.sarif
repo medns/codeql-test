@@ -11,15 +11,9 @@
       },
       "extensions" : [ ]
     },
-    "invocations" : [ ],
-    "artifacts" : [ {
-      "location" : {
-        "uri" : "1.py",
-        "uriBaseId" : "%SRCROOT%",
-        "index" : 0
-      }
-    } ],
-    "results" : [ ],
+    "invocations" : [],
+    "artifacts" : [],
+    "results" : [],
     "columnKind" : "unicodeCodePoints",
     "properties" : {
       "metricResults" : [ ],
