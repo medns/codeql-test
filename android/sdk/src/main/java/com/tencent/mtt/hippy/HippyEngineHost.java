@@ -32,6 +32,9 @@ public abstract class HippyEngineHost {
 
 
   public HippyEngineHost(Application application) {
+    long a = 0;
+    int b = 0;
+    a += b + 3;
     mApplication = application;
     ContextHolder.initAppContext(mApplication);
   }
