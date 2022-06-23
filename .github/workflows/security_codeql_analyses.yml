@@ -68,7 +68,7 @@ jobs:
           }
 
           if (!has_hit && "${{ matrix.language }}" === "typescript") { // Default Run
-            console.log("::set-output name=language::ruby");
+            console.log("::set-output name=language::${{ matrix.language }}");
           }
     - name: Checkout repository
       if: steps.detect_languages.outputs.language
