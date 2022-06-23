@@ -1,5 +1,80 @@
 {
   "$schema" : "https://json.schemastore.org/sarif-2.1.0.json",
   "version" : "2.1.0",
-  "runs" : []
+  "runs" : [ {
+    "tool" : {
+      "driver" : {
+        "name" : "CodeQL",
+        "organization" : "GitHub",
+        "semanticVersion" : "2.9.3",
+        "rules" : [ ]
+      },
+      "extensions" : [ ]
+    },
+    "invocations" : [ {
+      "toolExecutionNotifications" : [ {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "1.py",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 0
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "py/diagnostics/successfully-extracted-files",
+          "index" : 1,
+          "toolComponent" : {
+            "index" : 17
+          }
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          },
+          "relatedLocations" : [ ]
+        }
+      } ],
+      "executionSuccessful" : true
+    } ],
+    "artifacts" : [ {
+      "location" : {
+        "uri" : "1.py",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 0
+      }
+    } ],
+    "results" : [ ],
+    "columnKind" : "unicodeCodePoints",
+    "properties" : {
+      "metricResults" : [ {
+        "rule" : {
+          "id" : "py/summary/lines-of-code",
+          "index" : 33,
+          "toolComponent" : {
+            "index" : 17
+          }
+        },
+        "ruleId" : "py/summary/lines-of-code",
+        "value" : 109517
+      }, {
+        "rule" : {
+          "id" : "py/summary/lines-of-user-code",
+          "index" : 34,
+          "toolComponent" : {
+            "index" : 17
+          }
+        },
+        "ruleId" : "py/summary/lines-of-user-code",
+        "value" : 1,
+        "baseline" : 1
+      } ],
+      "semmle.formatSpecifier" : "sarif-latest"
+    }
+  } ]
 }
