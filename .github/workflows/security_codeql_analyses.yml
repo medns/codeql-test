@@ -102,3 +102,4 @@ jobs:
       uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: ./.github/python.sarif
+        category: fake_stub
