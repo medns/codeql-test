@@ -67,7 +67,7 @@ jobs:
             }
           }
 
-          if (!has_hit && "${{ matrix.language }}" === "javascript") { // Default Run
+          if (!has_hit && "${{ matrix.language }}" === "typescript") { // Default Run
             console.log("::set-output name=language::${{ matrix.language }}");
           }
     - name: Checkout repository
