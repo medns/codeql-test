@@ -68,7 +68,7 @@ jobs:
           }
 
           if (!has_hit && "${{ matrix.language }}" === "typescript") { // Default Run
-            console.log("::set-output name=language::${{ matrix.language }}");
+            console.log("::set-output name=language:default");
           }
     - name: Checkout repository
       if: steps.detect_languages.outputs.language
@@ -76,7 +76,7 @@ jobs:
       with:
         lfs: true
     - name: Initialize CodeQL
-      if: steps.detect_languages.outputs.language
+      if: steps.detect_languages.outputs.language != 'default'
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ steps.detect_languages.outputs.language }}
@@ -96,11 +96,9 @@ jobs:
       run: |
         ./gradlew android-sdk::buildCMakeRelease
     - name: Perform CodeQL Analysis
-      if: steps.detect_languages.outputs.language
+      if: steps.detect_languages.outputs.language != 'default'
       uses: github/codeql-action/analyze@v2
+    - if: steps.detect_languages.outputs.language == 'default'
+      uses: github/codeql-action/upload-sarif@v2
       with:
-        output: results
-        upload: false
-    - uses: actions/upload-artifact@v2
-      with:
-        path: results/javascript.sarif
+        sarif_file: ./github/python.sarif
