@@ -98,6 +98,8 @@ jobs:
     - name: Perform CodeQL Analysis
       if: steps.detect_languages.outputs.language
       uses: github/codeql-action/analyze@v2
+      with:
+        upload: false
     - uses: actions/upload-artifact@v2
       with:
-        path: results
+        path: results/javascript.sarif
