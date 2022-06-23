@@ -10,6 +10,7 @@
         "rules" : [ ]
       }
     },
+    "results": [],
     "properties" : {
       "metricResults" : [ ],
       "semmle.formatSpecifier" : "sarif-latest"
