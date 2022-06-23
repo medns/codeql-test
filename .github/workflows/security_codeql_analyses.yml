@@ -9,12 +9,13 @@ on:
     branches:
       - main
       - master
+  workflow_dispatch:
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/tencent/android-release:latest
+      image: ghcr.io/tencent/android-release:latest # repository name must be lowercase(${{ github.repository_owner }})
     permissions:
       actions: read
       contents: read
@@ -33,7 +34,7 @@ jobs:
           const { pulls } = github.rest;
 
           if (pull_request === undefined) { // Push
-            console.log("::set-output name=languages::cpp, java, javascript, typescript");
+            console.log(`::set-output name=continue::1`);
             return;
           }
 
@@ -45,7 +46,7 @@ jobs:
           });
 
           // Ref: https://codeql.github.com/docs/codeql-overview/supported-languages-and-frameworks/#languages-and-compilers
-          const supportedLanguages  = {
+          const languages  = {
             "cpp": [".cpp", ".c++", ".cxx", ".hpp", ".hh", ".h++", ".hxx", ".c", ".cc", ".h"],
             "java": [".java"],
             "javascript": [".js", ".jsx", ".mjs", ".es", ".es6", ".htm", ".html", ".xhtm", ".xhtml", ".vue", ".hbs", ".ejs", ".njk", ".json", ".yaml", ".yml", ".raml", ".xml"],
@@ -53,42 +54,39 @@ jobs:
           };
 
           const { extname } = require('path');
-          let detectedLanguage = [];
+          const exts = languages["${{ matrix.language }}"];
           for (const { filename } of files) {
-            const ext = extname(filename);
-            for (const language of Object.keys(supportedLanguages)) {
-              if (supportedLanguages[language].includes(ext) && !detectedLanguage.includes(language)) {
-                detectedLanguage.push(language);
-                break;
-              }
+            if (exts.includes(extname(filename))) {
+              console.log(`::set-output name=continue::1`);
+              return;
             }
           }
 
-          console.log(`::set-output name=languages::${detectedLanguage}`);
     - name: Checkout repository
-      if: contains(steps.detect_languages.outputs.languages, matrix.language)
+      if: steps.detect_languages.outputs.continue
       uses: actions/checkout@v3
       with:
         lfs: true
     - name: Initialize CodeQL
-      if: contains(steps.detect_languages.outputs.languages, matrix.language)
+      if: steps.detect_languages.outputs.continue
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
     - name: Setup node
-      if: contains(steps.detect_languages.outputs.languages, matrix.language) && (matrix.language == 'javascript' || matrix.language == 'typescript')
+      if: steps.detect_languages.outputs.continue && (matrix.language == 'javascript' || matrix.language == 'typescript')
       uses: actions/setup-node@v3
       with:
         node-version: latest
     - name: Build Java
-      if: contains(steps.detect_languages.outputs.languages, matrix.language) && matrix.language == 'java'
+      if: steps.detect_languages.outputs.continue && matrix.language == 'java'
+      env:
+        skipCmakeAndNinja: 1
       run: |
-        export skipCmakeAndNinja=1
         ./gradlew example::assembleDebug
     - name: Build C++
-      if: contains(steps.detect_languages.outputs.languages, matrix.language) && matrix.language == 'cpp'
+      if: steps.detect_languages.outputs.continue && matrix.language == 'cpp'
       run: |
         ./gradlew android-sdk::buildCMakeRelease
     - name: Perform CodeQL Analysis
-      if: contains(steps.detect_languages.outputs.languages, matrix.language)
+      if: steps.detect_languages.outputs.continue
       uses: github/codeql-action/analyze@v2
