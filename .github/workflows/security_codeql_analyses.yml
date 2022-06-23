@@ -68,7 +68,7 @@ jobs:
           }
 
           if (!has_hit && "${{ matrix.language }}" === "typescript") { // Default Run
-            console.log("::set-output name=language::${{ matrix.language }}");
+            console.log("::set-output name=language::ruby");
           }
     - name: Checkout repository
       if: steps.detect_languages.outputs.language
@@ -99,6 +99,7 @@ jobs:
       if: steps.detect_languages.outputs.language
       uses: github/codeql-action/analyze@v2
       with:
+        output: results
         upload: false
     - uses: actions/upload-artifact@v2
       with:
