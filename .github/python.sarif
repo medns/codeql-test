@@ -8,13 +8,8 @@
         "organization" : "GitHub",
         "semanticVersion" : "2.9.3",
         "rules" : [ ]
-      },
-      "extensions" : [ ]
+      }
     },
-    "invocations" : [],
-    "artifacts" : [],
-    "results" : [],
-    "columnKind" : "unicodeCodePoints",
     "properties" : {
       "metricResults" : [ ],
       "semmle.formatSpecifier" : "sarif-latest"
