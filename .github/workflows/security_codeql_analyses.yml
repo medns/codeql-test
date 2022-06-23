@@ -19,6 +19,10 @@ jobs:
       actions: read
       contents: read
       security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'cpp', 'java', 'javascript', typescript' ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -66,24 +70,24 @@ jobs:
 
           console.log(`::set-output name=languages::${detectedLanguage}`);
     - name: Initialize CodeQL
-      if: steps.detect_languages.outputs.languages != ''
+      if: contains(steps.detect_languages.outputs.languages, matrix.language)
       uses: github/codeql-action/init@v2
       with:
-        languages: ${{ steps.detect_languages.outputs.languages }}
+        languages: ${{ matrix.language }}
     - name: Setup node
-      if: contains(steps.detect_languages.outputs.languages, 'javascript') || contains(steps.detect_languages.outputs.languages, 'typescript')
+      if: contains(steps.detect_languages.outputs.languages, matrix.language) && (matrix.language == 'javascript' || matrix.language == 'typescript')
       uses: actions/setup-node@v3
       with:
         node-version: latest
     - name: Build Java
-      if: contains(steps.detect_languages.outputs.languages, 'java')
+      if: contains(steps.detect_languages.outputs.languages, matrix.language) && matrix.language == 'java'
       run: |
         export skipCmakeAndNinja=1
         ./gradlew example::assembleDebug
     - name: Build C++
-      if: contains(steps.detect_languages.outputs.languages, 'cpp')
+      if: contains(steps.detect_languages.outputs.languages, matrix.language) && matrix.language == 'cpp'
       run: |
         ./gradlew android-sdk::buildCMakeRelease
     - name: Perform CodeQL Analysis
-      if: steps.detect_languages.outputs.languages != ''
+      if: contains(steps.detect_languages.outputs.languages, matrix.language)
       uses: github/codeql-action/analyze@v2
