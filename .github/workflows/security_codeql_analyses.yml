@@ -24,10 +24,6 @@ jobs:
       matrix:
         language: [ 'cpp', 'java', 'javascript', 'typescript' ]
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        lfs: true
     - name: Detect languages
       id: detect_languages
       uses: actions/github-script@v6.1.0
@@ -69,6 +65,11 @@ jobs:
           }
 
           console.log(`::set-output name=languages::${detectedLanguage}`);
+    - name: Checkout repository
+      if: contains(steps.detect_languages.outputs.languages, matrix.language)
+      uses: actions/checkout@v3
+      with:
+        lfs: true
     - name: Initialize CodeQL
       if: contains(steps.detect_languages.outputs.languages, matrix.language)
       uses: github/codeql-action/init@v2
