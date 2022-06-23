@@ -61,6 +61,7 @@ public abstract class HippyEngineManager extends HippyEngine {
       HippyRootView.OnLoadCompleteListener onLoadCompleteListener);
 
   public void destroyInstance(HippyRootView rootView) {
+    int a = 0;
     destroyModule(rootView);
   }
 
