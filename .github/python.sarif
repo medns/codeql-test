@@ -4,16 +4,9 @@
   "runs" : [ {
     "tool" : {
       "driver" : {
-        "name" : "CodeQL",
-        "organization" : "GitHub",
-        "semanticVersion" : "2.9.3",
-        "rules" : [ ]
+        "name" : "CodeQL"
       }
     },
-    "results": [],
-    "properties" : {
-      "metricResults" : [ ],
-      "semmle.formatSpecifier" : "sarif-latest"
-    }
+    "results": []
   } ]
 }
