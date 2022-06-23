@@ -11,37 +11,7 @@
       },
       "extensions" : [ ]
     },
-    "invocations" : [ {
-      "toolExecutionNotifications" : [ {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "1.py",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 0
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "py/diagnostics/successfully-extracted-files",
-          "index" : 1,
-          "toolComponent" : {
-            "index" : 17
-          }
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          },
-          "relatedLocations" : [ ]
-        }
-      } ],
-      "executionSuccessful" : true
-    } ],
+    "invocations" : [ ],
     "artifacts" : [ {
       "location" : {
         "uri" : "1.py",
@@ -52,28 +22,7 @@
     "results" : [ ],
     "columnKind" : "unicodeCodePoints",
     "properties" : {
-      "metricResults" : [ {
-        "rule" : {
-          "id" : "py/summary/lines-of-code",
-          "index" : 33,
-          "toolComponent" : {
-            "index" : 17
-          }
-        },
-        "ruleId" : "py/summary/lines-of-code",
-        "value" : 109517
-      }, {
-        "rule" : {
-          "id" : "py/summary/lines-of-user-code",
-          "index" : 34,
-          "toolComponent" : {
-            "index" : 17
-          }
-        },
-        "ruleId" : "py/summary/lines-of-user-code",
-        "value" : 1,
-        "baseline" : 1
-      } ],
+      "metricResults" : [ ],
       "semmle.formatSpecifier" : "sarif-latest"
     }
   } ]
