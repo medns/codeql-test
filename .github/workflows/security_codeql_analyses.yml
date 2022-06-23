@@ -91,7 +91,7 @@ jobs:
       if: steps.detect_languages.outputs.continue
       uses: github/codeql-action/analyze@v2
     - run: |
-        touch 123.sarif
+        echo '{"version": "2.1.0", "runs": []}' >> 123.sarif
     - uses: github/codeql-action/upload-sarif@v2
       if: matrix.language == 'cpp'
       with:
